@@ -1,4 +1,4 @@
-name: Daily Research Check-in
+name: Auto Contribution Check-in
 
 on:
   schedule:
@@ -12,11 +12,11 @@ permissions:
   contents: write
 
 concurrency:
-  group: daily-research-check-in
+  group: auto-contribution-check-in
   cancel-in-progress: false
 
 jobs:
-  daily-check-in:
+  auto-contribution-check-in:
     runs-on: ubuntu-latest
 
     env:
@@ -26,8 +26,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Update daily activity log
-        run: bash scripts/update-daily-log.sh
+      - name: Update contribution log
+        run: bash scripts/update-contribution-log.sh
 
       - name: Commit and push if changed
         shell: bash
@@ -37,7 +37,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          if git diff --quiet -- activity/daily-log.csv; then
+          if git diff --quiet -- activity/contribution-log.csv; then
             echo "No new daily check-in to commit."
             exit 0
           fi
@@ -54,6 +54,6 @@ jobs:
           git config user.name "${author_name}"
           git config user.email "${author_email}"
 
-          git add activity/daily-log.csv
-          git commit -m "chore: daily research check-in ${today}"
+          git add activity/contribution-log.csv
+          git commit -m "chore: auto contribution check-in ${today}"
           git push

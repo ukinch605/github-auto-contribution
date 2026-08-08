@@ -3,8 +3,8 @@ set -euo pipefail
 
 today="${CHECK_IN_DATE:-$(date +%F)}"
 timestamp="${CHECK_IN_TIMESTAMP:-$(date '+%F %T %Z')}"
-note="${CHECK_IN_NOTE:-automated daily research check-in}"
-log_file="${CHECK_IN_LOG_FILE:-activity/daily-log.csv}"
+note="${CHECK_IN_NOTE:-automated contribution check-in}"
+log_file="${CHECK_IN_LOG_FILE:-activity/contribution-log.csv}"
 
 mkdir -p "$(dirname "${log_file}")"
 
@@ -18,4 +18,4 @@ if grep -q "^${today}," "${log_file}"; then
 fi
 
 echo "${today},${timestamp},${note}" >> "${log_file}"
-echo "Recorded daily check-in for ${today}."
+echo "Recorded contribution check-in for ${today}."
